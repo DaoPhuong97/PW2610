@@ -47,4 +47,3 @@ test("login fails with blank password and blank username", async ({ page }) => {
   await expect(page).toHaveURL("https://the-internet.herokuapp.com/login");
   await expect(page.getByText("Your username is invalid! ×"));
 });
-
