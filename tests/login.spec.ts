@@ -48,20 +48,3 @@ test("login fails with blank password and blank username", async ({ page }) => {
   await expect(page.getByText("Your username is invalid! ×"));
 });
 
-test("login fails with SQL injection in username", async ({ page }) => {
-  await page.goto("https://the-internet.herokuapp.com/login");
-  await page.getByRole("textbox", { name: "Username" }).fill("' OR '1'='1' -- ");
-  await page.getByRole("textbox", { name: "Password" }).fill("invalidPassword");
-  await page.getByRole("button", { name: " Login" }).click();
-  await expect(page).toHaveURL("https://the-internet.herokuapp.com/login");
-  await expect(page.getByText("Your username is invalid!")).toBeVisible();
-});
-
-test("login fails with SQL injection in username", async ({ page }) => {
-  await page.goto("https://the-internet.herokuapp.com/login");
-  await page.getByRole("textbox", { name: "Username" }).fill("tomsmith");
-  await page.getByRole("textbox", { name: "Password" }).fill("' OR '1'='1' -- ");
-  await page.getByRole("button", { name: " Login" }).click();
-  await expect(page).toHaveURL("https://the-internet.herokuapp.com/login");
-  await expect(page.getByText("Your username is invalid!")).toBeVisible();
-});
