@@ -20,4 +20,22 @@ test("verify selecting multiple options success", async ({ page }) => {
   ]); // verify multiple options are selected
 });
 
+test('verify Custome Select ',async ({ page }) => {
+  await page.goto("https://qa-demo-site-ten.vercel.app/elements/dropdown");
+  await page.getByTestId("dropdown-custom-trigger").click();
+  await page.getByText('Option 1', { exact: true }).click();
+  await expect(
+        page.getByTestId('dropdown-custom-trigger')
+    ).toContainText('Option 1');
+})
 
+test('verify disabled Option in Native Dropdown', async ({ page }) => {
+  await page.goto("https://qa-demo-site-ten.vercel.app/elements/dropdown");
+
+  const disabledOption = page
+    .getByTestId("dropdown-native")
+    .locator("option")
+    .filter({ hasText: "Remix (disabled)" });
+
+  await expect(disabledOption).toBeDisabled();
+});
